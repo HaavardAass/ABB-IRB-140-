@@ -35,7 +35,7 @@ class IRB140ColorDetectionProgram(tk.Tk):
         frame.tkraise()
 
 ```    
-Next we created class **StartPage** for the program, where you would choose which robot you are on, either white or orange. It is necesarry to send you to the correct robot to get both the correct image size, as well as the right relation between mm and px.
+Next we created class **StartPage** for the program, where you would choose which robot you are on, either white or orange. It is necesarry to send you to the correct robot to get both the correct image size, as well as the right relation between mm and px. If you press the button for orange robot, you will be brought to class **Orange_robot**. If you press the button for white robot, you will be brought to class **White_robot**.
 
 ```Python
 class StartPage(tk.Frame):
@@ -110,7 +110,7 @@ class White_robot(tk.Frame):
         button.image = button_image
         button.place(x=60, y=380)  # Adjust the placement of the button within the frame
 ```
-Here we created class **Calibrate_colours**, where you can use trackbar sliders to calibrate the hsv values, so that class **Run_Program_Orange** and **Run_Program_white**, easily can track the colours and shapes, which will be sent to the robot controller. In this class, there are 4 buttons, which starts the right function for the correct colour to be calibrated. The last button on the bottom sends you back to the robot menu. The new values for the hsv, will be displayed underneath the button after the calibration is done at each channel. Remember to press **q** before closing the calibrate window. **We recommend to always start with a calibration, every time you open the program**
+If you pressed the button colour calibration, you will be brough to class **Calibrate_colours**, where you can use trackbar sliders to calibrate the hsv values, so that class **Run_Program_Orange** and **Run_Program_white**, easily can track the colours and shapes, which will be sent to the robot controller. In this class, there are 4 buttons, which starts the right function for the correct colour to be calibrated. The last button on the bottom sends you back to the robot menu. The new values for the hsv, will be displayed underneath the button after the calibration is done at each channel. Remember to press **q** before closing the calibrate window. **We recommend to always start with a calibration, every time you open the program**. The program uses trackbars to asjust the tresholds of each colours mask. 
 ```Python
 class Calibrate_colours(tk.Frame):
      def __init__(self, parent, controller):
@@ -120,10 +120,10 @@ class Calibrate_colours(tk.Frame):
                 pass
             cv2.namedWindow('Color Detection')
             # Red trackbars
-            cv2.createTrackbar("Red_L - H", "Color Detection", 136, 180, nothing)
-            cv2.createTrackbar("Red_L - S", "Color Detection", 87, 255, nothing)
-            cv2.createTrackbar("Red_L - V", "Color Detection", 111, 255, nothing)
-            cv2.createTrackbar("Red_U - H", "Color Detection", 180, 180, nothing)
+            cv2.createTrackbar("Red_L - H", "Color Detection", 0, 255, nothing)
+            cv2.createTrackbar("Red_L - S", "Color Detection", 240, 255, nothing)
+            cv2.createTrackbar("Red_L - V", "Color Detection", 192, 255, nothing)
+            cv2.createTrackbar("Red_U - H", "Color Detection", 26, 255, nothing)
             cv2.createTrackbar("Red_U - S", "Color Detection", 255, 255, nothing)
             cv2.createTrackbar("Red_U - V", "Color Detection", 255, 255, nothing)
             height = 800 
@@ -158,18 +158,17 @@ class Calibrate_colours(tk.Frame):
                     return red_lower_updated, red_upper_updated
                     break
             cv2.destroyAllWindows()
-
          def detect_color_blue():
             def nothing(x):
                 pass
             cv2.namedWindow('Color Detection')
             # Blue trackbars
-            cv2.createTrackbar("Blue_L - H", "Color Detection", 136, 180, nothing)
-            cv2.createTrackbar("Blue_L - S", "Color Detection", 87, 255, nothing)
-            cv2.createTrackbar("Blue_L - V", "Color Detection", 111, 255, nothing)
-            cv2.createTrackbar("Blue_U - H", "Color Detection", 180, 180, nothing)
-            cv2.createTrackbar("Blue_U - S", "Color Detection", 255, 255, nothing)
-            cv2.createTrackbar("Blue_U - V", "Color Detection", 255, 255, nothing)
+            cv2.createTrackbar("Blue_L - H", "Color Detection", 56, 255, nothing)
+            cv2.createTrackbar("Blue_L - S", "Color Detection", 0, 255, nothing)
+            cv2.createTrackbar("Blue_L - V", "Color Detection", 142, 255, nothing)
+            cv2.createTrackbar("Blue_U - H", "Color Detection", 123, 255, nothing)
+            cv2.createTrackbar("Blue_U - S", "Color Detection", 246, 255, nothing)
+            cv2.createTrackbar("Blue_U - V", "Color Detection", 243, 255, nothing)
             height = 800 
             width = 2048
             webcam = cv2.VideoCapture(0)
@@ -204,16 +203,15 @@ class Calibrate_colours(tk.Frame):
                     webcam.release()
                     break
             cv2.destroyAllWindows()
-            
          def detect_color_green():
             def nothing(x):
                 pass
             cv2.namedWindow('Color Detection')
             # Red trackbars
-            cv2.createTrackbar("Green_L - H", "Color Detection", 136, 180, nothing)
-            cv2.createTrackbar("Green_L - S", "Color Detection", 87, 255, nothing)
-            cv2.createTrackbar("Green_L - V", "Color Detection", 111, 255, nothing)
-            cv2.createTrackbar("Green_U - H", "Color Detection", 180, 180, nothing)
+            cv2.createTrackbar("Green_L - H", "Color Detection", 36, 255, nothing)
+            cv2.createTrackbar("Green_L - S", "Color Detection", 213, 255, nothing)
+            cv2.createTrackbar("Green_L - V", "Color Detection", 142, 255, nothing)
+            cv2.createTrackbar("Green_U - H", "Color Detection", 47, 255, nothing)
             cv2.createTrackbar("Green_U - S", "Color Detection", 255, 255, nothing)
             cv2.createTrackbar("Green_U - V", "Color Detection", 255, 255, nothing)
             height = 800 
@@ -249,25 +247,24 @@ class Calibrate_colours(tk.Frame):
                     break
             cv2.destroyAllWindows()
          # Create labels to display color values
-         
          tk.Frame.__init__(self, parent)
-         image = tk.PhotoImage(file="C:\\Users\\s362154\\Downloads\\ABB_GUI\\ABB\\ABB.png")
+         image = tk.PhotoImage(file="C:\\Users\\s362251\\Downloads\\ABB_GUI\\ABB\\ABB.png")
          background_label = tk.Label(self, image=image)
          background_label.image = image
          background_label.place(x=0, y=0, relwidth=1, relheight=1)
-         button_image = tk.PhotoImage(file="C:\\Users\\s362154\\Downloads\\ABB_GUI\\ABB\\Button_red_cal.png")
+         button_image = tk.PhotoImage(file="C:\\Users\\s362251\\Downloads\\ABB_GUI\\ABB\\Button_red_cal.png")
          button = tk.Button(self, image=button_image,command=detect_color_red)
          button.image = button_image
          button.place(x=60, y=80)  
-         button_image = tk.PhotoImage(file="C:\\Users\\s362154\\Downloads\\ABB_GUI\\ABB\\Button_blue_cal.png")
+         button_image = tk.PhotoImage(file="C:\\Users\\s362251\\Downloads\\ABB_GUI\\ABB\\Button_blue_cal.png")
          button = tk.Button(self, image=button_image,command=detect_color_blue)
          button.image = button_image
          button.place(x=620, y=80)  
-         button_image = tk.PhotoImage(file="C:\\Users\\s362154\\Downloads\\ABB_GUI\\ABB\\Button_green_cal.png")
+         button_image = tk.PhotoImage(file="C:\\Users\\s362251\\Downloads\\ABB_GUI\\ABB\\Button_green_cal.png")
          button = tk.Button(self, image=button_image,command=detect_color_green)
          button.image = button_image
          button.place(x=1180, y=80) 
-         button_image = tk.PhotoImage(file="C:\\Users\\s362154\\Downloads\\ABB_GUI\\ABB\\Button_rob.png")
+         button_image = tk.PhotoImage(file="C:\\Users\\s362251\\Downloads\\ABB_GUI\\ABB\\Button_rob.png")
          button = tk.Button(self, image=button_image,command=lambda: controller.show_frame(White_robot))
          button.image = button_image
          button.place(x=620, y=700) 
@@ -281,232 +278,253 @@ class Calibrate_colours(tk.Frame):
          self.green_values.place(x=1080, y=650)
          self.green_values.lift()
 ```
-Here we have class **Run_Program_White**, which is the class, where we detect the center point of each shape, colour of the shape and the figure of the shape. The program starts when you press the button **Run Program**. First the program creates a socket to the robot controller. Then we set the frame size of the camera, and then it proceeds to do colour detection, shape detection and find the center point, which in the end will be sent over to the robot controller.
+If you pressed the button Run Program, you will be sent to class **Run_Program_White**, which is the class, where we detect the center point of each shape, colour of the shape and the figure of the shape. The program starts when you press the button **Run Program**. First the program creates a socket to the robot controller. Then we set the frame size of the camera, and then it proceeds to do colour detection, shape detection and find the center point, which in the end will be sent over to the robot controller. The program first detect the colour of the object by threshould values, next the program looks at the contours to find the area of the object to determine a pick point. Nest the progrram looks for how many edges it can create within the object, to determine what shape the object is. At last we send data to the robot controller, which consist of no. of objects, colours of the objects, shape of the objects and pick points.
 ```Python
-class Run_Program_white(tk.Frame):  
-   def run_program(self):
-       print("Hello form run_program")
-       height = 600
-       width = 1440  
-       list_cont = []
-       def main():
-           print("Hello from main in run_program")
-           client = socket_setup()
-           white_rob = True
-           mm_Px_rel_X, mm_Px_rel_Y = mmPx_rel(white_rob)
-           
-           webcam = init_cam()
-           _, imageFrame = webcam.read()
-           hsvFrame = cv2.cvtColor(imageFrame, cv2.COLOR_BGR2HSV) 
-           # Access the red, blue, and green values from the calibration instance
-           global red_lower_updated, red_upper_updated, blue_lower_updated, blue_upper_updated, green_lower_updated, green_upper_updated
-           #red_lower = np.array([0, 222, 237], np.uint8) 
-           #red_upper = np.array([17, 255, 255], np.uint8) 
-           red_mask = cv2.inRange(hsvFrame, red_lower_updated, red_upper_updated) 
-           #green_lower = np.array([15, 255, 140], np.uint8) 
-           #green_upper = np.array([173, 255, 255], np.uint8) 
-           green_mask = cv2.inRange(hsvFrame, green_lower_updated, green_upper_updated)
-           #blue_lower = np.array([92, 191, 0], np.uint8) 
-           #blue_upper = np.array([145, 255, 233], np.uint8) 
-           blue_mask = cv2.inRange(hsvFrame, blue_lower_updated, blue_upper_updated)
-           kernel = np.ones((5, 5), "uint8") 
-           red_mask = cv2.dilate(red_mask, kernel) 
-           res_red = cv2.bitwise_and(imageFrame, imageFrame,  
-                                     mask = red_mask) 
-           green_mask = cv2.dilate(green_mask, kernel) 
-           res_green = cv2.bitwise_and(imageFrame, imageFrame, 
-                                       mask = green_mask) 
-           blue_mask = cv2.dilate(blue_mask, kernel) 
-           res_blue = cv2.bitwise_and(imageFrame, imageFrame, 
-                                      mask = blue_mask) 
-           contours, hierarchy = cv2.findContours(red_mask, 
-                                                  cv2.RETR_TREE, 
-                                                  cv2.CHAIN_APPROX_SIMPLE) 
-       
-           for pic, contour in enumerate(contours):
-               area = cv2.contourArea(contour) 
-               if(area > 2000): 
-                   M = cv2.moments(contour)
-                   cx = int(M['m01']/(M['m00']+ 1e-5))
-                   cy = int(M['m10']/(M['m00']+ 1e-5))
-                   x_cord_robot = round(cx*mm_Px_rel_X)
-                   y_cord_robot = round(cy*mm_Px_rel_Y)
-                   print("x, y: ", x_cord_robot, y_cord_robot)
-                   approx = cv2.approxPolyDP(contour, 0.02*cv2.arcLength(contour, True), True)
-                   if len(approx) == 4:
-                       list_cont.append(("red", "square", str(x_cord_robot), str(y_cord_robot)))
-                   elif 7 < len(approx) < 20:
-                       list_cont.append(("red", "circle", str(x_cord_robot), str(y_cord_robot)))
-                   x, y, w, h = cv2.boundingRect(contour)
-                   imageFrame = cv2.rectangle(imageFrame, (x, y),  
-                                              (x + w, y + h),  
-                                              (0, 0, 255), 2)
-                   cv2.putText(imageFrame, "red", (x, y), 
-                               cv2.FONT_HERSHEY_SIMPLEX, 1.0, 
-                               (0, 0, 255))     
-           contours, hierarchy = cv2.findContours(green_mask, 
-                                                  cv2.RETR_TREE, 
-                                                  cv2.CHAIN_APPROX_SIMPLE)
-           for pic, contour in enumerate(contours): 
-               area = cv2.contourArea(contour) 
-               if(area > 2000): 
-                   M = cv2.moments(contour)
-                   cx = int(M['m01']/(M['m00']+ 1e-5))
-                   cy = int(M['m10']/(M['m00']+ 1e-5))
-                   x_cord_robot = round(cx*mm_Px_rel_X)
-                   y_cord_robot = round(cy*mm_Px_rel_Y)
-                   print("x, y: ", x_cord_robot, y_cord_robot)
-                   approx = cv2.approxPolyDP(contour, 0.02*cv2.arcLength(contour, True), True)
-                   if len(approx) == 4:
-                       list_cont.append(("green", "square", str(x_cord_robot), str(y_cord_robot)))
-                   elif 7 < len(approx) < 20:
-                       list_cont.append(("green", "circle", str(x_cord_robot), str(y_cord_robot)))
-                   x, y, w, h = cv2.boundingRect(contour)
-                   x, y, w, h = cv2.boundingRect(contour) 
-                   imageFrame = cv2.rectangle(imageFrame, (x, y),  
-                                              (x + w, y + h), 
-                                              (0, 255, 0), 2) 
-                   cv2.putText(imageFrame, "green", (x, y), 
-                               cv2.FONT_HERSHEY_SIMPLEX,  
-                               1.0, (0, 255, 0)) 
-           contours, hierarchy = cv2.findContours(blue_mask, 
-                                                  cv2.RETR_TREE, 
-                                                  cv2.CHAIN_APPROX_SIMPLE) 
-           for pic, contour in enumerate(contours): 
-               area = cv2.contourArea(contour) 
-               if(area > 2000): 
-                   M = cv2.moments(contour)
-                   cx = int(M['m01']/(M['m00']+ 1e-5))
-                   cy = int(M['m10']/(M['m00']+ 1e-5))
-                   x_cord_robot = round(cx*mm_Px_rel_X)
-                   y_cord_robot = round(cy*mm_Px_rel_Y)
-                   print("x, y: ", x_cord_robot, y_cord_robot)
-                   approx = cv2.approxPolyDP(contour, 0.02*cv2.arcLength(contour, True), True)
-                   if len(approx) == 4:
-                       list_cont.append(("blue", "square", str(x_cord_robot), str(y_cord_robot)))
-                   elif 7 < len(approx) < 20:
-                       list_cont.append(("blue", "circle", str(x_cord_robot), str(y_cord_robot)))
-                   x, y, w, h = cv2.boundingRect(contour)
-                   x, y, w, h = cv2.boundingRect(contour) 
-                   imageFrame = cv2.rectangle(imageFrame, (x, y), 
-                                              (x + w, y + h), 
-                                              (255, 0, 0), 2) 
-                   cv2.putText(imageFrame, "blue", (x, y), 
-                               cv2.FONT_HERSHEY_SIMPLEX, 
-                               1.0, (255, 0, 0))
-           
-           
-           print("Len of list:", len(list_cont))
-           print("List contents:", list_cont)
-           send_data_to_rapid(client, list_cont)
-           
-           
-           cv2.imshow("Multiple Color Detection in Real-TIme", imageFrame) 
-           if cv2.waitKey(10) & 0xFF == ord('q'):  
-               cv2.destroyAllWindows() 
-           #C:/Users/s362154/OneDrive - OsloMet/Dokumenter/lab2bilder
-           directory = r'C:\Users\s362154\Documents\lab2bilder'
-           os.chdir(directory)
-           nytt_filnavn = 'savedImage.jpg'
-           existing_files = os.listdir(directory)
-           if nytt_filnavn in existing_files:
-               nytt_filnavn = str(len(existing_files) + 1) + "_" + nytt_filnavn
-               cv2.imwrite(nytt_filnavn, blue_mask)
-           else:
-               cv2.imwrite(nytt_filnavn, blue_mask)
-           existing_files = os.listdir(directory)
-           if nytt_filnavn in existing_files:
-               nytt_filnavn = str(len(existing_files) + 1) + "_" + nytt_filnavn
-               cv2.imwrite(nytt_filnavn, red_mask)
-           else:
-               cv2.imwrite(nytt_filnavn, red_mask)
-           existing_files = os.listdir(directory)
-           if nytt_filnavn in existing_files:
-               nytt_filnavn = str(len(existing_files) + 1) + "_" + nytt_filnavn
-               cv2.imwrite(nytt_filnavn, green_mask)
-           else:
-               cv2.imwrite(nytt_filnavn, green_mask)
-           
-           webcam.release()
-           
-       def socket_setup():
-           print("I'm inside socket_setup")
-           client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-           host = "192.168.12.62"
-           port = 2222
-           client.connect((host,port))
-           return client
-       
-       def mmPx_rel(white_rob):
-           if white_rob:
-               # Hvit robot workobject koordinater
-               x1, x2, x3, x4 =  658.4,  307.2,  644.7,  283.9
-               y1, y2, y3, y4 = -427.2,  435.8, -430.0,  427.3
-           else:
-               # Oransj robot workobject koordinater
-               x1, x2, x3, x4 =  657.7,  353.6,  665.9,  362.8
-               y1, y2, y3, y4 = -414.3,  363.3, -404.9,  365.3
-           X_avg = ((x1-x2)+(x3-x4))/2
-           Y_avg = abs(((y1-y2)+(y3-y4))/2)
-           mm_Px_relation_X = X_avg/height
-           mm_Px_relation_Y = Y_avg/width
-           return mm_Px_relation_X, mm_Px_relation_Y
-       
-       def init_cam():
-           #Initialiserer camera
-           print("Hello from inside init_cam")
-           cam = cv2.VideoCapture(0, cv2.CAP_DSHOW)
-           print(cam)
-           cam.set(cv2.CAP_PROP_FRAME_HEIGHT,height)
-           cam.set(cv2.CAP_PROP_FRAME_WIDTH,width)
-           return cam
-       
-       def send_data_to_rapid(client, list_cont: list):
-           """
-           Expects a connected client and a list containing tuples where every element in the tuples are strings
-           Iterates over every element in every tuple and sending them separately
-           """
-           # Sends a string containing the length of list_cont
-           # Equivalent to sending the number of objects detected
-           client.send(bytes(str(len(list_cont)), "utf-8"))
-           # Get the response from RAPID
-           response = client.recv(4096)
-           response = response.decode("utf-8")
-           print(response)
-           # Checks if too many objects were recieved
-           # Terminates if true
-           # Sends all obj data if false
-           if response == "Too many objects. Terminating...":
-               exit()
-           else:
-               # Iterates over each obj/tuple in list_cont
-               for tuple in list_cont:
-                   # Iterates over every data point in obj/tuple
-                   for elem in tuple:
-                       print("Sending data:", elem, end=", ")
-                       client.send(bytes(elem, "utf-8"))
-                       # Recieves a response once data has been recieved
-                       response = client.recv(4096)
-                       response = response.decode("utf-8")
-                       print(response)
-       
-       print("I'm about to call main within run_program")
-       print("rgb: ", red_lower_updated,green_lower_updated, blue_lower_updated)
-       main()
-       print("Can I even get here?")    
-       
-   def __init__(self, parent, controller):
-       tk.Frame.__init__(self, parent)
-       image = tk.PhotoImage(file="C:\\Users\\s362154\\Downloads\\ABB_GUI\\ABB\\ABB.png")
-       background_label = tk.Label(self, image=image)
-       background_label.image = image
-       background_label.place(x=0, y=0, relwidth=1, relheight=1) 
-       button_image = tk.PhotoImage(file="C:\\Users\\s362154\\Downloads\\ABB_GUI\\ABB\\Button_run_program.png")
-       button = tk.Button(self, image=button_image,command=self.run_program)
-       button.image = button_image
-       button.place(x=660, y=80) 
+class Run_Program_white(tk.Frame):         
+    def run_program(self):
+        print("Hello form run_program")
+        height = 600
+        width = 1440  
+        list_cont = []
+        def main():
+            print("Hello from main in run_program")
+            client = socket_setup()
+            white_rob = False
+            mm_Px_rel_X, mm_Px_rel_Y = mmPx_rel(white_rob)
+            
+            webcam = init_cam()
+            _, imageFrame = webcam.read()
+            hsvFrame = cv2.cvtColor(imageFrame, cv2.COLOR_BGR2HSV) 
+            # Access the red, blue, and green values from the calibration instance
+            global red_lower_updated, red_upper_updated, blue_lower_updated, blue_upper_updated, green_lower_updated, green_upper_updated
+            #red_lower = np.array([0, 222, 237], np.uint8) 
+            #red_upper = np.array([17, 255, 255], np.uint8) 
+            red_mask = cv2.inRange(hsvFrame, red_lower_updated, red_upper_updated) 
+            #green_lower = np.array([15, 255, 140], np.uint8) 
+            #green_upper = np.array([173, 255, 255], np.uint8) 
+            green_mask = cv2.inRange(hsvFrame, green_lower_updated, green_upper_updated)
+            #blue_lower = np.array([92, 191, 0], np.uint8) 
+            #blue_upper = np.array([145, 255, 233], np.uint8) 
+            blue_mask = cv2.inRange(hsvFrame, blue_lower_updated, blue_upper_updated)
+            kernel = np.ones((5, 5), "uint8") 
+            red_mask = cv2.dilate(red_mask, kernel) 
+            res_red = cv2.bitwise_and(imageFrame, imageFrame,  
+                                      mask = red_mask) 
+            green_mask = cv2.dilate(green_mask, kernel) 
+            res_green = cv2.bitwise_and(imageFrame, imageFrame, 
+                                        mask = green_mask) 
+            blue_mask = cv2.dilate(blue_mask, kernel) 
+            res_blue = cv2.bitwise_and(imageFrame, imageFrame, 
+                                       mask = blue_mask) 
+            contours, hierarchy = cv2.findContours(red_mask, 
+                                                   cv2.RETR_TREE, 
+                                                   cv2.CHAIN_APPROX_SIMPLE) 
+        
+            for pic, contour in enumerate(contours):
+                area = cv2.contourArea(contour) 
+                if(area > 2000): 
+                    M = cv2.moments(contour)
+                    cx = int(M['m01']/(M['m00']+ 1e-5))
+                    cy = int(M['m10']/(M['m00']+ 1e-5))
+                    x_cord_robot = round(cx*mm_Px_rel_X)
+                    y_cord_robot = round(cy*mm_Px_rel_Y)
+                    print("x, y: ", x_cord_robot, y_cord_robot)
+                    approx = cv2.approxPolyDP(contour, 0.02*cv2.arcLength(contour, True), True)
+                    x = approx.ravel()[0]
+                    y = approx.ravel()[1]
+                    cv2.drawContours(imageFrame, [approx], 0, (0, 0, 0), 5)
+                    if len(approx) == 4:
+                        list_cont.append(("red", "square", str(x_cord_robot), str(y_cord_robot)))
+                        cv2.putText(imageFrame, "Square", (x, y), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 0))
+                    elif 7 < len(approx) < 20:
+                        list_cont.append(("red", "circle", str(x_cord_robot), str(y_cord_robot)))
+                        cv2.putText(imageFrame, "Circle", (x, y), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 0))
+                    x, y, w, h = cv2.boundingRect(contour)
+                    imageFrame = cv2.rectangle(imageFrame, (x, y),  
+                                               (x + w, y + h),  
+                                               (0, 0, 255), 2)
+                    cv2.putText(imageFrame, "red", (x, y), 
+                                cv2.FONT_HERSHEY_SIMPLEX, 1.0, 
+                                (0, 0, 255))     
+            contours, hierarchy = cv2.findContours(green_mask, 
+                                                   cv2.RETR_TREE, 
+                                                   cv2.CHAIN_APPROX_SIMPLE)
+            for pic, contour in enumerate(contours): 
+                area = cv2.contourArea(contour) 
+                if(area > 2000): 
+                    M = cv2.moments(contour)
+                    cx = int(M['m01']/(M['m00']+ 1e-5))
+                    cy = int(M['m10']/(M['m00']+ 1e-5))
+                    x_cord_robot = round(cx*mm_Px_rel_X)
+                    y_cord_robot = round(cy*mm_Px_rel_Y)
+                    print("x, y: ", x_cord_robot, y_cord_robot)
+                    approx = cv2.approxPolyDP(contour, 0.02*cv2.arcLength(contour, True), True)
+                    x = approx.ravel()[0]
+                    y = approx.ravel()[1]
+                    cv2.drawContours(imageFrame, [approx], 0, (0, 0, 0), 5)
+                    if len(approx) == 4:
+                        list_cont.append(("green", "square", str(x_cord_robot), str(y_cord_robot)))
+                        cv2.putText(imageFrame, "Square", (x, y), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 0))
+                    elif 7 < len(approx) < 20:
+                        list_cont.append(("green", "circle", str(x_cord_robot), str(y_cord_robot)))
+                        cv2.putText(imageFrame, "Circle", (x, y), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 0))
+                    x, y, w, h = cv2.boundingRect(contour)
+                    x, y, w, h = cv2.boundingRect(contour) 
+                    imageFrame = cv2.rectangle(imageFrame, (x, y),  
+                                               (x + w, y + h), 
+                                               (0, 255, 0), 2) 
+                    cv2.putText(imageFrame, "green", (x, y), 
+                                cv2.FONT_HERSHEY_SIMPLEX,  
+                                1.0, (0, 255, 0)) 
+            contours, hierarchy = cv2.findContours(blue_mask, 
+                                                   cv2.RETR_TREE, 
+                                                   cv2.CHAIN_APPROX_SIMPLE) 
+            for pic, contour in enumerate(contours): 
+                area = cv2.contourArea(contour) 
+                if(area > 2000): 
+                    M = cv2.moments(contour)
+                    cx = int(M['m01']/(M['m00']+ 1e-5))
+                    cy = int(M['m10']/(M['m00']+ 1e-5))
+                    x_cord_robot = round(cx*mm_Px_rel_X)
+                    y_cord_robot = round(cy*mm_Px_rel_Y)
+                    print("x, y: ", x_cord_robot, y_cord_robot)
+                    approx = cv2.approxPolyDP(contour, 0.02*cv2.arcLength(contour, True), True)
+                    x = approx.ravel()[0]
+                    y = approx.ravel()[1]
+                    cv2.drawContours(imageFrame, [approx], 0, (0, 0, 0), 5)
+                    if len(approx) == 4:
+                        list_cont.append(("blue", "square", str(x_cord_robot), str(y_cord_robot)))
+                        cv2.putText(imageFrame, "Square", (x, y), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 0))
+                    elif 7 < len(approx) < 20:
+                        list_cont.append(("blue", "circle", str(x_cord_robot), str(y_cord_robot)))
+                        cv2.putText(imageFrame, "Circle", (x, y), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 0))
+                    x, y, w, h = cv2.boundingRect(contour)
+                    x, y, w, h = cv2.boundingRect(contour) 
+                    imageFrame = cv2.rectangle(imageFrame, (x, y), 
+                                               (x + w, y + h), 
+                                               (255, 0, 0), 2) 
+                    cv2.putText(imageFrame, "blue", (x, y), 
+                                cv2.FONT_HERSHEY_SIMPLEX, 
+                                1.0, (255, 0, 0))
+            
+            
+            print("Len of list:", len(list_cont))
+            print("List contents:", list_cont)
+            send_data_to_rapid(client, list_cont)
+            
+            
+            cv2.imshow("Multiple Color Detection in Real-TIme", imageFrame) 
+            if cv2.waitKey(10) & 0xFF == ord('q'):  
+                cv2.destroyAllWindows() 
+            #C:/Users/s362251/OneDrive - OsloMet/Dokumenter/lab2bilder
+            directory = r'C:\Users\s362251\Documents\lab2bilder'
+            os.chdir(directory)
+            nytt_filnavn = 'savedImage.jpg'
+            existing_files = os.listdir(directory)
+            if nytt_filnavn in existing_files:
+                nytt_filnavn = str(len(existing_files) + 1) + "_" + nytt_filnavn
+                cv2.imwrite(nytt_filnavn, blue_mask)
+            else:
+                cv2.imwrite(nytt_filnavn, blue_mask)
+            existing_files = os.listdir(directory)
+            if nytt_filnavn in existing_files:
+                nytt_filnavn = str(len(existing_files) + 1) + "_" + nytt_filnavn
+                cv2.imwrite(nytt_filnavn, red_mask)
+            else:
+                cv2.imwrite(nytt_filnavn, red_mask)
+            existing_files = os.listdir(directory)
+            if nytt_filnavn in existing_files:
+                nytt_filnavn = str(len(existing_files) + 1) + "_" + nytt_filnavn
+                cv2.imwrite(nytt_filnavn, green_mask)
+            else:
+                cv2.imwrite(nytt_filnavn, green_mask)
+            existing_files = os.listdir(directory)
+            if nytt_filnavn in existing_files:
+                nytt_filnavn = str(len(existing_files) + 1) + "_" + nytt_filnavn
+                cv2.imwrite(nytt_filnavn, imageFrame)
+            else:
+                cv2.imwrite(nytt_filnavn, imageFrame)
+            
+            webcam.release()
+            
+        def socket_setup():
+            print("I'm inside socket_setup")
+            client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            host = "192.168.12.62"
+            port = 2222
+            client.connect((host,port))
+            return client
+        
+        def mmPx_rel(white_rob):
+            if white_rob:
+                # Hvit robot workobject koordinater
+                x1, x2, x3, x4 =  658.4,  307.2,  644.7,  283.9
+                y1, y2, y3, y4 = -427.2,  435.8, -430.0,  427.3
+            else:
+                # Oransj robot workobject koordinater
+                x1, x2, x3, x4 =  657.7,  353.6,  665.9,  362.8
+                y1, y2, y3, y4 = -414.3,  363.3, -404.9,  365.3
+            X_avg = ((x1-x2)+(x3-x4))/2
+            Y_avg = abs(((y1-y2)+(y3-y4))/2)
+            mm_Px_relation_X = X_avg/height
+            mm_Px_relation_Y = Y_avg/width
+            return mm_Px_relation_X, mm_Px_relation_Y
+        
+        def init_cam():
+            #Initialiserer camera
+            print("Hello from inside init_cam")
+            cam = cv2.VideoCapture(0, cv2.CAP_DSHOW)
+            print(cam)
+            cam.set(cv2.CAP_PROP_FRAME_HEIGHT,height)
+            cam.set(cv2.CAP_PROP_FRAME_WIDTH,width)
+            return cam
+        
+        def send_data_to_rapid(client, list_cont: list):
+            """
+            Expects a connected client and a list containing tuples where every element in the tuples are strings
+            Iterates over every element in every tuple and sending them separately
+            """
+            # Sends a string containing the length of list_cont
+            # Equivalent to sending the number of objects detected
+            client.send(bytes(str(len(list_cont)), "utf-8"))
+            # Get the response from RAPID
+            response = client.recv(4096)
+            response = response.decode("utf-8")
+            print(response)
+            # Checks if too many objects were recieved
+            # Terminates if true
+            # Sends all obj data if false
+            if response == "Too many objects. Terminating...":
+                exit()
+            else:
+                # Iterates over each obj/tuple in list_cont
+                for tuple in list_cont:
+                    # Iterates over every data point in obj/tuple
+                    for elem in tuple:
+                        print("Sending data:", elem, end=", ")
+                        client.send(bytes(elem, "utf-8"))
+                        # Recieves a response once data has been recieved
+                        response = client.recv(4096)
+                        response = response.decode("utf-8")
+                        print(response)
+        
+        print("I'm about to call main within run_program")
+        print("rgb: ", red_lower_updated,green_lower_updated, blue_lower_updated)
+        main()
+        print("Can I even get here?")    
+        
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+        image = tk.PhotoImage(file="C:\\Users\\s362251\\Downloads\\ABB_GUI\\ABB\\ABB.png")
+        background_label = tk.Label(self, image=image)
+        background_label.image = image
+        background_label.place(x=0, y=0, relwidth=1, relheight=1) 
+        button_image = tk.PhotoImage(file="C:\\Users\\s362251\\Downloads\\ABB_GUI\\ABB\\Button_run_program.png")
+        button = tk.Button(self, image=button_image,command=self.run_program)
+        button.image = button_image
+        button.place(x=660, y=80) 
 ```
-Here we have class **Run_Program_Orange**, which is the class, where we detect the center point of each shape, colour of the shape and the figure of the shape. The program starts when you press the button **Run Program**. First the program creates a socket to the robot controller. Then we set the frame size of the camera, and then it proceeds to do colour detection, shape detection and find the center point, which in the end will be sent over to the robot controller.
+If you pressed the button Run Program, you will be sent to class **Run_Program_Orange**, which is the class, where we detect the center point of each shape, colour of the shape and the figure of the shape. The program starts when you press the button **Run Program**. First the program creates a socket to the robot controller. Then we set the frame size of the camera, and then it proceeds to do colour detection, shape detection and find the center point, which in the end will be sent over to the robot controller. The program first detect the colour of the object by threshould values, next the program looks at the contours to find the area of the object to determine a pick point. Nest the progrram looks for how many edges it can create within the object, to determine what shape the object is. At last we send data to the robot controller, which consist of no. of objects, colours of the objects, shape of the objects and pick points.
 ```Python
 class Run_Program_Orange(tk.Frame):        
     def run_program(self):
@@ -558,10 +576,15 @@ class Run_Program_Orange(tk.Frame):
                     y_cord_robot = round(cy*mm_Px_rel_Y)
                     print("x, y: ", x_cord_robot, y_cord_robot)
                     approx = cv2.approxPolyDP(contour, 0.02*cv2.arcLength(contour, True), True)
+                    x = approx.ravel()[0]
+                    y = approx.ravel()[1]
+                    cv2.drawContours(imageFrame, [approx], 0, (0, 0, 0), 5)
                     if len(approx) == 4:
                         list_cont.append(("red", "square", str(x_cord_robot), str(y_cord_robot)))
+                        cv2.putText(imageFrame, "Square", (x, y), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 0))
                     elif 7 < len(approx) < 20:
                         list_cont.append(("red", "circle", str(x_cord_robot), str(y_cord_robot)))
+                        cv2.putText(imageFrame, "Circle", (x, y), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 0))
                     x, y, w, h = cv2.boundingRect(contour)
                     imageFrame = cv2.rectangle(imageFrame, (x, y),  
                                                (x + w, y + h),  
@@ -582,10 +605,15 @@ class Run_Program_Orange(tk.Frame):
                     y_cord_robot = round(cy*mm_Px_rel_Y)
                     print("x, y: ", x_cord_robot, y_cord_robot)
                     approx = cv2.approxPolyDP(contour, 0.02*cv2.arcLength(contour, True), True)
+                    x = approx.ravel()[0]
+                    y = approx.ravel()[1]
+                    cv2.drawContours(imageFrame, [approx], 0, (0, 0, 0), 5)
                     if len(approx) == 4:
                         list_cont.append(("green", "square", str(x_cord_robot), str(y_cord_robot)))
+                        cv2.putText(imageFrame, "Square", (x, y), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 0))
                     elif 7 < len(approx) < 20:
                         list_cont.append(("green", "circle", str(x_cord_robot), str(y_cord_robot)))
+                        cv2.putText(imageFrame, "Circle", (x, y), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 0))
                     x, y, w, h = cv2.boundingRect(contour)
                     x, y, w, h = cv2.boundingRect(contour) 
                     imageFrame = cv2.rectangle(imageFrame, (x, y),  
@@ -607,10 +635,15 @@ class Run_Program_Orange(tk.Frame):
                     y_cord_robot = round(cy*mm_Px_rel_Y)
                     print("x, y: ", x_cord_robot, y_cord_robot)
                     approx = cv2.approxPolyDP(contour, 0.02*cv2.arcLength(contour, True), True)
+                    x = approx.ravel()[0]
+                    y = approx.ravel()[1]
+                    cv2.drawContours(imageFrame, [approx], 0, (0, 0, 0), 5)
                     if len(approx) == 4:
                         list_cont.append(("blue", "square", str(x_cord_robot), str(y_cord_robot)))
+                        cv2.putText(imageFrame, "Square", (x, y), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 0))
                     elif 7 < len(approx) < 20:
                         list_cont.append(("blue", "circle", str(x_cord_robot), str(y_cord_robot)))
+                        cv2.putText(imageFrame, "Circle", (x, y), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 0))
                     x, y, w, h = cv2.boundingRect(contour)
                     x, y, w, h = cv2.boundingRect(contour) 
                     imageFrame = cv2.rectangle(imageFrame, (x, y), 
@@ -629,8 +662,8 @@ class Run_Program_Orange(tk.Frame):
             cv2.imshow("Multiple Color Detection in Real-TIme", imageFrame) 
             if cv2.waitKey(10) & 0xFF == ord('q'):  
                 cv2.destroyAllWindows() 
-            #C:/Users/s362154/OneDrive - OsloMet/Dokumenter/lab2bilder
-            directory = r'C:\Users\s362154\Documents\lab2bilder'
+            #C:/Users/s362251/OneDrive - OsloMet/Dokumenter/lab2bilder
+            directory = r'C:\Users\s362251\Documents\lab2bilder'
             os.chdir(directory)
             nytt_filnavn = 'savedImage.jpg'
             existing_files = os.listdir(directory)
@@ -651,6 +684,12 @@ class Run_Program_Orange(tk.Frame):
                 cv2.imwrite(nytt_filnavn, green_mask)
             else:
                 cv2.imwrite(nytt_filnavn, green_mask)
+            existing_files = os.listdir(directory)
+            if nytt_filnavn in existing_files:
+                nytt_filnavn = str(len(existing_files) + 1) + "_" + nytt_filnavn
+                cv2.imwrite(nytt_filnavn, imageFrame)
+            else:
+                cv2.imwrite(nytt_filnavn, imageFrame)
             
             webcam.release()
             
@@ -719,19 +758,8 @@ class Run_Program_Orange(tk.Frame):
         print("rgb: ", red_lower_updated,green_lower_updated, blue_lower_updated)
         main()
         print("Can I even get here?")    
-        
-    def __init__(self, parent, controller):
-        tk.Frame.__init__(self, parent)
-        image = tk.PhotoImage(file="C:\\Users\\s362154\\Downloads\\ABB_GUI\\ABB\\ABB.png")
-        background_label = tk.Label(self, image=image)
-        background_label.image = image
-        background_label.place(x=0, y=0, relwidth=1, relheight=1) 
-        button_image = tk.PhotoImage(file="C:\\Users\\s362154\\Downloads\\ABB_GUI\\ABB\\Button_run_program.png")
-        button = tk.Button(self, image=button_image,command=self.run_program)
-        button.image = button_image
-        button.place(x=660, y=80)
 ````
-Lastly we run the program and set thw window size for the program. 
+At last we run the program and set the window size for the program. 
 ```Python
 app = IRB140ColorDetectionProgram()
 app.geometry("1440x810")  # Setting window size to 1440x810
@@ -748,4 +776,3 @@ app.mainloop()
 - Jostein Hansen
 - Ann-Kristin Krane Schleis
 - Thomas Folkvord Fredriksen
-
